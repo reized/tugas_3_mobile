@@ -58,8 +58,8 @@ class _HomePageState extends State<HomePage> {
             selectedIndex: _selectedIndex,
             onDestinationSelected: _onItemTapped,
             destinations: const <NavigationDestination>[
-              NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-              NavigationDestination(icon: Icon(Icons.person), label: 'Member'),
+              NavigationDestination(icon: Icon(Icons.dashboard), label: 'Home'),
+              NavigationDestination(icon: Icon(Icons.groups), label: 'Member'),
               NavigationDestination(icon: Icon(Icons.help), label: 'Help'),
             ]));
   }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_3_mobile/pages/login_page.dart';
+import 'package:tugas_3_mobile/utils/session_manager.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({super.key});
 
   void logout(BuildContext context) async {
+    // clear session
+    await SessionManager.clearSession();
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => const LoginPage()),

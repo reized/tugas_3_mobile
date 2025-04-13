@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_3_mobile/pages/home_page.dart';
+import 'package:tugas_3_mobile/utils/session_manager.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,9 +14,11 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String errorMessage = '';
 
-  void login() {
+  void login() async {
     if (_usernameController.text == 'fulan' &&
         _passwordController.text == 'fulan') {
+      // save session
+      await SessionManager.saveLoginSession(_usernameController.text);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

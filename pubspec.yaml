@@ -28,12 +28,15 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-    cupertino_icons: ^1.0.8
     flutter:
         sdk: flutter
     shared_preferences: ^2.5.3
     stop_watch_timer: ^3.2.1
-
+    cupertino_icons: ^1.0.8
+    intl: ^0.20.2
+    url_launcher: ^6.3.1
+    cached_network_image: ^3.4.1
+    
 dev_dependencies:
     # The "flutter_lints" package below contains a set of recommended lints to
     # encourage good coding practices. The lint set provided by the package is

@@ -14,9 +14,17 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String errorMessage = '';
 
+  final Map<String, String> userCredentials = {
+    'fikri': '042',
+    're': '050',
+    'veri': '146',
+  };
+
   void login() async {
-    if (_usernameController.text == 'fulan' &&
-        _passwordController.text == 'fulan') {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    if (userCredentials[username] == password) {
       // save session
       await SessionManager.saveLoginSession(_usernameController.text);
       Navigator.pushReplacement(
@@ -41,11 +49,43 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // icon toolbox
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                decoration: BoxDecoration(
+                  color: Colors.teal.shade50,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.teal.shade200),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.teal.withAlpha(64),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: const [
+                    Icon(Icons.handyman, size: 64, color: Colors.teal),
+                    SizedBox(height: 8),
+                    Text(
+                      'Toolbox',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.teal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
               Text('Login',
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
               Text('Login untuk menjalankan aplikasi',
                   style: TextStyle(fontSize: 16)),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               TextField(
                 controller: _usernameController,
                 decoration: const InputDecoration(

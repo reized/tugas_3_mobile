@@ -23,30 +23,47 @@ class MemberPage extends StatelessWidget {
       },
     ];
 
-    return ListView.builder(
+    return Padding(
       padding: const EdgeInsets.all(16),
-      itemCount: members.length,
-      itemBuilder: (context, index) {
-        final member = members[index];
-        return Card(
-          elevation: 4,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          margin: const EdgeInsets.only(bottom: 16),
-          child: ListTile(
-            contentPadding: const EdgeInsets.all(12),
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(member['image']!),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            'Anggota Kelompok',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-            title: Text(
-              member['name']!,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text('NIM: ${member['nim']}'),
           ),
-        );
-      },
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: members.length,
+              itemBuilder: (context, index) {
+                final member = members[index];
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(12),
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(member['image']!),
+                    ),
+                    title: Text(
+                      member['name']!,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('NIM: ${member['nim']}'),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

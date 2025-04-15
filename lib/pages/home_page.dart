@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<String> _titles = <String>[
-    'Home',
+    'Toolbox',
     'Member',
     'Help',
   ];
@@ -81,7 +81,19 @@ class HomeBody extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 10.0),
+                child: Text(
+                  'Selamat datang, $text! 👋',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -154,7 +166,8 @@ class HomeBody extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => JenisBilanganPage()),
+                    MaterialPageRoute(
+                        builder: (context) => JenisBilanganPage()),
                   );
                 },
                 child: Padding(
@@ -286,7 +299,6 @@ class HomeBody extends StatelessWidget {
                   ),
                 ),
               ),
-        
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -355,7 +367,6 @@ class HomeBody extends StatelessWidget {
                   ),
                 ),
               ),
-        
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -424,7 +435,6 @@ class HomeBody extends StatelessWidget {
                   ),
                 ),
               ),
-        
             ],
           ),
         ),

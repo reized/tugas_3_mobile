@@ -2,9 +2,23 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tugas_3_mobile/models/situsmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:tugas_3_mobile/pages/favorite_web.dart';
 
-class FavoritPage extends StatelessWidget {
+class FavoritPage extends StatefulWidget {
   const FavoritPage({super.key});
+
+  @override
+  State<FavoritPage> createState() => _FavoritPageState();
+}
+
+class _FavoritPageState extends State<FavoritPage> {
+  List<WebsiteModel> situsList = List.from(dummyWebsites);
+
+  void toggleFavorite(WebsiteModel situs) {
+    setState(() {
+      situs.isFavorite = !situs.isFavorite;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,23 +26,41 @@ class FavoritPage extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Colors.white,
-          elevation: 4,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Konversi Tahun Ke Menit",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
+        foregroundColor: Colors.white,
+        elevation: 4,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Daftar Situs",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FavoriteWeb(
+                    favoritList: situsList.where((e) => e.isFavorite).toList(),
+                    onUpdate: (situs) => toggleFavorite(situs),
+                  ),
+                ),
+              );
+
+              if (context.mounted) {
+                setState(() {});
+              }
+            },
           ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            ListMenu(context)
-          ],
+          children: [ListMenu(context)],
         ),
       ),
     );
@@ -57,7 +89,8 @@ class FavoritPage extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.all(5),
                           child: ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
                             child: CachedNetworkImage(
                               imageUrl: item.image,
                               width: 100,
@@ -66,12 +99,16 @@ class FavoritPage extends StatelessWidget {
                               placeholder: (context, url) => const SizedBox(
                                 width: 100,
                                 height: 120,
-                                child: Center(child: CircularProgressIndicator()),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
                               ),
-                              errorWidget: (context, url, error) => const SizedBox(
+                              errorWidget: (context, url, error) =>
+                                  const SizedBox(
                                 width: 100,
                                 height: 120,
-                                child: Center(child: Icon(Icons.broken_image, color: Colors.grey)),
+                                child: Center(
+                                    child: Icon(Icons.broken_image,
+                                        color: Colors.grey)),
                               ),
                             ),
                           ),
@@ -83,7 +120,8 @@ class FavoritPage extends StatelessWidget {
                             children: [
                               Text(
                                 item.title,
-                                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -98,8 +136,13 @@ class FavoritPage extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.favorite),
-                          onPressed: () {},
+                          icon: Icon(
+                            item.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: item.isFavorite ? Colors.red : null,
+                          ),
+                          onPressed: () => toggleFavorite(item),
                         ),
                       ],
                     ),

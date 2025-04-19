@@ -5,6 +5,7 @@ class WebsiteModel {
   final String image;
   final String description;
   int visits;
+  bool isFavorite;
 
   WebsiteModel({
     required this.id,
@@ -13,6 +14,7 @@ class WebsiteModel {
     required this.image,
     required this.description,
     this.visits = 0,
+    this.isFavorite = false,
   });
 }
 

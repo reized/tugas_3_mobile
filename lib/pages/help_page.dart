@@ -57,7 +57,7 @@ class HelpPage extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             '1. Login:\nMasukkan email dan password yang sudah terdaftar. Setelah berhasil login, Anda akan diarahkan ke halaman dashboard.\n\n'
-            '2. Halaman Utama:\nPada halaman utama aplikasi terdapat beberapa fitur seperti stopwatch, konversi bilangan, konversi waktu, layanan lbs (Location-Based Service), dan situs favorit.\n\n'
+            '2. Halaman Utama:\nPada halaman utama aplikasi terdapat beberapa fitur seperti stopwatch, konversi bilangan, konversi waktu, layanan lbs (Location-Based Service), dan daftar situs.\n\n'
             '3. Menu Anggota (Member):\nMenu ini menampilkan daftar anggota beserta informasi seperti nama dan NIM. Anda dapat melihat profil setiap anggota pada halaman ini.\n\n'
             '4. Menu Bantuan (Help):\nMenu ini memberikan panduan penggunaan aplikasi serta informasi kontak jika mengalami kendala. Anda juga dapat logout dari aplikasi melalui tombol logout yang tersedia di halaman ini.\n\n'
             '5. Logout:\nUntuk keluar dari aplikasi, pilih tombol "Logout" di halaman Bantuan & Panduan. Setelah itu, Anda akan diarahkan kembali ke halaman login.',

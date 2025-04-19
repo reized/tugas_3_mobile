@@ -396,7 +396,7 @@ class HomeBody extends StatelessWidget {
                             child: Opacity(
                               opacity: 0.65,
                               child: Icon(
-                                Icons.thumb_up_alt_outlined,
+                                Icons.web,
                                 size: 80,
                                 color: Colors.white,
                               ),
@@ -410,7 +410,7 @@ class HomeBody extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Situs Favorit",
+                                    "Daftar Situs",
                                     style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.white,
@@ -418,7 +418,7 @@ class HomeBody extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "Cari situs favorit yang dapat dikunjungi",
+                                    "Kunjungi berbagai situs yang menarik",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,

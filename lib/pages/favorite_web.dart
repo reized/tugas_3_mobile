@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tugas_3_mobile/models/situsmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:tugas_3_mobile/utils/favorites_manager.dart';
 
 class FavoriteWeb extends StatefulWidget {
   final List<WebsiteModel> favoritList;
@@ -18,6 +19,24 @@ class FavoriteWeb extends StatefulWidget {
 }
 
 class _FavoriteWebState extends State<FavoriteWeb> {
+  late List<WebsiteModel> favoriteWebsites;
+
+  @override
+  void initState() {
+    super.initState();
+    favoriteWebsites = widget.favoritList;
+  }
+
+  // hapus dari favorit
+  void removeFromFavorites(WebsiteModel website) async {
+    await FavoritesManager.removeFromFavorites(website.id);
+    setState(() {
+      website.isFavorite = false;
+      favoriteWebsites.remove(website);
+    });
+    widget.onUpdate(website);
+  }
+
   @override
   Widget build(BuildContext context) {
     // hanya ambil situs favorit

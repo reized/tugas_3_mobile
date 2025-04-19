@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tugas_3_mobile/models/situsmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:tugas_3_mobile/pages/favorite_web.dart';
+import 'package:tugas_3_mobile/utils/favorites_manager.dart';
 
 class FavoritPage extends StatefulWidget {
   const FavoritPage({super.key});
@@ -13,8 +14,34 @@ class FavoritPage extends StatefulWidget {
 
 class _FavoritPageState extends State<FavoritPage> {
   List<WebsiteModel> situsList = List.from(dummyWebsites);
+  bool isLoading = true;
 
-  void toggleFavorite(WebsiteModel situs) {
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  // load favorit dari SharedPreferences
+  Future<void> _loadFavorites() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<String> favoriteIds = await FavoritesManager.getFavoriteIds();
+    
+    setState(() {
+      // update status favorit pada semua website
+      for (var website in situsList) {
+        website.isFavorite = favoriteIds.contains(website.id);
+      }
+      isLoading = false;
+    });
+  }
+
+  // toggle favorit dan simpan ke SharedPreferences
+  void toggleFavorite(WebsiteModel situs) async {
+    await FavoritesManager.toggleFavorite(situs.id);
     setState(() {
       situs.isFavorite = !situs.isFavorite;
     });

@@ -1,19 +1,28 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_3_mobile/models/situsmodel.dart';
+import 'package:tugas_3_mobile/utils/session_manager.dart';
 
 class FavoritesManager {
-  static const String keyFavorites = 'favorite_websites';
+  static const String baseKeyFavorites = 'favorite_websites';
+
+  // mendapatkan key favorit berdasarkan username
+  static Future<String> _getUserFavoritesKey() async {
+    String? username = await SessionManager.getUsername();
+    return '${username}_$baseKeyFavorites';
+  }
 
   // simpan id website favorit
   static Future<bool> saveFavorites(List<String> favoriteIds) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return await prefs.setStringList(keyFavorites, favoriteIds);
+    String key = await _getUserFavoritesKey();
+    return await prefs.setStringList(key, favoriteIds);
   }
 
   // dapatkan id website favorit
   static Future<List<String>> getFavoriteIds() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(keyFavorites) ?? [];
+    String key = await _getUserFavoritesKey();
+    return prefs.getStringList(key) ?? [];
   }
 
   // menambahkan website ke favorit
@@ -47,14 +56,15 @@ class FavoritesManager {
   }
 
   // mendapatkan daftar website yang difavoritkan
-  static Future<List<WebsiteModel>> loadFavoriteWebsites(List<WebsiteModel> allWebsites) async {
+  static Future<List<WebsiteModel>> loadFavoriteWebsites(
+      List<WebsiteModel> allWebsites) async {
     List<String> favoriteIds = await getFavoriteIds();
-    
+
     // update status favorit pada semua website
     for (var website in allWebsites) {
       website.isFavorite = favoriteIds.contains(website.id);
     }
-    
+
     // filter website yang difavoritkan saja
     return allWebsites.where((website) => website.isFavorite).toList();
   }

@@ -1,9 +1,11 @@
+// lib/pages/FavoritPage.dart
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tugas_3_mobile/models/situsmodel.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:tugas_3_mobile/pages/favorite_web.dart';
 import 'package:tugas_3_mobile/utils/favorites_manager.dart';
+import 'package:tugas_3_mobile/utils/session_manager.dart';
 
 class FavoritPage extends StatefulWidget {
   const FavoritPage({super.key});
@@ -15,11 +17,23 @@ class FavoritPage extends StatefulWidget {
 class _FavoritPageState extends State<FavoritPage> {
   List<WebsiteModel> situsList = List.from(dummyWebsites);
   bool isLoading = true;
+  String username = 'User';
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
     _loadFavorites();
+  }
+
+  // load username
+  Future<void> _loadUserData() async {
+    String? currentUsername = await SessionManager.getUsername();
+    if (currentUsername != null) {
+      setState(() {
+        username = currentUsername;
+      });
+    }
   }
 
   // load favorit dari SharedPreferences
@@ -29,7 +43,7 @@ class _FavoritPageState extends State<FavoritPage> {
     });
 
     List<String> favoriteIds = await FavoritesManager.getFavoriteIds();
-    
+
     setState(() {
       // update status favorit pada semua website
       for (var website in situsList) {
@@ -74,6 +88,7 @@ class _FavoritPageState extends State<FavoritPage> {
                   builder: (context) => FavoriteWeb(
                     favoritList: situsList.where((e) => e.isFavorite).toList(),
                     onUpdate: (situs) => toggleFavorite(situs),
+                    username: username,
                   ),
                 ),
               );
@@ -85,11 +100,13 @@ class _FavoritPageState extends State<FavoritPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [ListMenu(context)],
-        ),
-      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
+                children: [ListMenu(context)],
+              ),
+            ),
     );
   }
 

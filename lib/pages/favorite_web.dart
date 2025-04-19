@@ -7,11 +7,13 @@ import 'package:tugas_3_mobile/utils/favorites_manager.dart';
 class FavoriteWeb extends StatefulWidget {
   final List<WebsiteModel> favoritList;
   final Function(WebsiteModel) onUpdate;
+  final String username;
 
   const FavoriteWeb({
     super.key,
     required this.favoritList,
     required this.onUpdate,
+    required this.username,
   });
 
   @override
@@ -39,19 +41,23 @@ class _FavoriteWebState extends State<FavoriteWeb> {
 
   @override
   Widget build(BuildContext context) {
-    // hanya ambil situs favorit
-    List<WebsiteModel> favoriteWebsites = dummyWebsites.where((w) => w.isFavorite).toList();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
-        title: const Text("Situs Favorit", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Situs Favorit",
+                style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
       body: favoriteWebsites.isEmpty
           ? const Center(
-              child: Text("Belum ada situs favorit", style: TextStyle(fontSize: 16)),
+              child: Text("Belum ada situs favorit",
+                  style: TextStyle(fontSize: 16)),
             )
           : ListView.builder(
               itemCount: favoriteWebsites.length,
@@ -83,12 +89,16 @@ class _FavoriteWebState extends State<FavoriteWeb> {
                                   placeholder: (context, url) => const SizedBox(
                                     width: 100,
                                     height: 120,
-                                    child: Center(child: CircularProgressIndicator()),
+                                    child: Center(
+                                        child: CircularProgressIndicator()),
                                   ),
-                                  errorWidget: (context, url, error) => const SizedBox(
+                                  errorWidget: (context, url, error) =>
+                                      const SizedBox(
                                     width: 100,
                                     height: 120,
-                                    child: Center(child: Icon(Icons.broken_image, color: Colors.grey)),
+                                    child: Center(
+                                        child: Icon(Icons.broken_image,
+                                            color: Colors.grey)),
                                   ),
                                 ),
                               ),
@@ -100,7 +110,9 @@ class _FavoriteWebState extends State<FavoriteWeb> {
                                 children: [
                                   Text(
                                     item.title,
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -115,12 +127,9 @@ class _FavoriteWebState extends State<FavoriteWeb> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.favorite, color: Colors.red),
-                              onPressed: () {
-                                setState(() {
-                                  item.isFavorite = false; // Hapus dari favorit
-                                });
-                              },
+                              icon:
+                                  const Icon(Icons.favorite, color: Colors.red),
+                              onPressed: () => removeFromFavorites(item),
                             ),
                           ],
                         ),
